@@ -31,7 +31,7 @@ This project combines **exploratory data analysis (EDA)** and **machine learning
   plt.savefig("01_Univariate_Analysis_of_ Numerical_Features.jpg", bbox_inches='tight')
   plt.show()
   ```
-![Univariate Analysis of Numerical Features](output/figure/01_Univariate_Analysis_of_ Numerical_Features.jpg)
+![(Univariate Analysis of Numerical Features)](output/figure/01_Univariate_Analysis_of_ Numerical_Features.jpg)
 - Univariate Analysis of Categorical Feature
   ```python
   cat_columns=['make','body', 'transmission','state', 'color', 'interior']
@@ -136,14 +136,179 @@ This project combines **exploratory data analysis (EDA)** and **machine learning
   ```
   ![(Monthly Sales Revenue (Top 10 Brands))](output/figure/07_Monthly_Sales_Revenue_(Top_10_Brands).jpg)
 - Top 10 Most Popular Cars (Brand-Model)
+  ```python
+  top_model = (df['make'] + ' - ' + df['model']).value_counts().head(10).reset_index()
+  top_model.columns = ['BrandModel', 'Quantity']
+  
+  max_val = top_model['Quantity'].max()
+  
+  fig = px.bar(
+    top_model,
+    x='BrandModel',
+    y='Quantity',
+    title='Top 10 Most Popular Cars (Brand-Model)',
+    text='Quantity'
+  )
+  
+  fig.update_traces(textposition='outside')
+  
+  fig.update_layout(
+    yaxis=dict(range=[0, max_val * 1.2]),
+    xaxis_tickangle=-45
+  )
+  
+  fig.show()
+  fig.write_html("08_Top_10_Most_Popular_Cars.html")
+  ```
+  ![(Top 10 Most Popular Cars)](output/figure/08_Top_10_Most_Popular_Cars.html)
 - Top 10 Cars by Total Sales Revenue
+  ```python
+  df['BrandModel'] = df['make'] + ' - ' + df['model']
+  
+  # Group by BrandModel and sum the selling price
+  top_model_revenue = (
+    df.groupby('BrandModel')['sellingprice']
+    .sum()
+    .sort_values(ascending=False)
+    .head(10)
+    .reset_index()
+  )
+  top_model_revenue['TotalRevenueMillions$'] = (top_model_revenue['sellingprice'] / 1e6).round(2)
+  
+  # Get max revenue value to set y-axis limit
+  max_val = top_model_revenue['TotalRevenueMillions$'].max()
+  
+  # Create the bar chart
+  fig = px.bar(
+    top_model_revenue,
+    x='BrandModel',
+    y='TotalRevenueMillions$',
+    title='Top 10 Cars by Total Sales Revenue (in Millions)',
+    text='TotalRevenueMillions$'
+  )
+  
+  fig.update_traces(textposition='outside')
+  
+  fig.update_layout(
+    yaxis=dict(range=[0, max_val * 1.2]),  # 20% headroom
+    yaxis_title='Revenue (Millions $)',
+    xaxis_tickangle=-45,
+    xaxis=dict(categoryorder='total descending')
+  )
+  
+  fig.show()
+  fig.write_html("09_Top_10_Cars_by_Total_Sales_Revenue.html")
+  ```
+  ![Top 10 Cars by Total Sales Revenue)](output/figure/09_Top_10_Cars_by_Total_Sales_Revenue.html)
 - Treemap of top cars models by total revenue
+  ```python
+  model_revenue = (
+    df.groupby(['make', 'model'])['sellingprice']
+    .sum()
+    .reset_index()
+    .sort_values(by='sellingprice', ascending=False)
+  )
+  
+  fig = px.treemap(
+    model_revenue.head(50),  # Limit to top 50 for clarity
+    path=['make', 'model'],
+    values='sellingprice',
+    title='Top Cars Models by Total Revenue'
+  )
+  fig.show()
+  fig.write_html("10_Top_ Cars_Models_by_Total_Revenue_(treemap).html")
+  ```
+  ![(Top Cars Models by Total Revenue)](output/figure/10_Top_%20Cars_Models_by_Total_Revenue_(treemap).html)
 - Scatterplot of Car Selling Price vs Manufacturing Year by Brand
-
+  ```python
+  fig = px.scatter(
+    df,
+    x='year',
+    y='sellingprice',
+    color='make',  
+    title='Car Selling Price vs Manufacturing Year by Brand',
+    opacity=0.6,
+    height=600
+  )
+  
+  fig.update_layout(
+    xaxis=dict(dtick=1),
+    yaxis_title='Selling Price ($)',
+    xaxis_title='Year',
+    legend_title='Brand',
+    margin=dict(l=60, r=20, t=60, b=60)
+  )
+  
+  fig.show()
+  fig.write_html("11_Cars_Selling_Price_vs_Manufacturing_Year_by_Brand_(scatter).html")
+  ```
+  ![(Cars Selling Price vs Manufacturing Year by Brand)](output/figure/11_Cars_Selling_Price_vs_Manufacturing_Year_by_Brand_(scatter).html)
+- Heatmap Total Sales Revenue by State
+  ```python
+  state_revenue = df.groupby('state')['sellingprice'].sum().reset_index()
+  
+  fig = px.choropleth(
+    state_revenue,
+    locations='state',
+    locationmode="USA-states",
+    color='sellingprice',
+    color_continuous_scale="cividis",
+    scope="usa",
+    title="Total Sales Revenue by State"
+  )
+  fig.show()
+  fig.write_html("12_Total_Sales_Revenue_by_State.html")
+  ```
+  ![(Total Sales Revenue by State)](output/figure/12_Total_Sales_Revenue_by_State.html)
 ## Modeling
 - Linear Regression  
-- Metrics: MAE, RMSE, R²  
-
+- Metrics: MAE, RMSE, R²
+  ```python
+  #target
+  y = df['sellingprice']
+  
+  #predictor features
+  X = df[['year', 'condition', 'odometer', 'mmr']]
+  
+  #split: train and test
+  X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42
+  )
+  
+  #Linear Regression
+  linreg = LinearRegression()
+  linreg.fit(X_train, y_train)
+  
+  #prediction
+  y_pred = linreg.predict(X_test)
+  
+  #evaluation
+  mae = mean_absolute_error(y_test, y_pred)
+  rmse = np.sqrt(mean_squared_error(y_test, y_pred))
+  r2 = r2_score(y_test, y_pred)
+  
+  print("=== Linear Regression ===")
+  print("MAE:", mae)
+  print("RMSE:", rmse)
+  print("R² Score:", r2)
+  
+  #coef feature
+  coef = pd.DataFrame({
+    'Feature': X.columns,
+    'Coefficient': linreg.coef_
+  }).sort_values(by='Coefficient', ascending=False)
+  print("\nCoefficient Linear Regression:")
+  print(coef)
+  
+  print("Intercept:", linreg.intercept_)
+  
+  #Save model
+  joblib.dump(linreg, "linear_regression_model_car.pkl")
+  
+  #Load model
+  loaded_model = joblib.load("linear_regression_model_car.pkl")
+  ```
+  ![(model)](output/model/linear_regression_model_car.pkl)
 ## Results
 - Key insights: Car prices are mainly influenced by condition and MMR.  
 
