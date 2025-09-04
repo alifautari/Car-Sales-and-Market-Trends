@@ -1,5 +1,5 @@
 # Car-Sales-and-Market-Trends
-This project combines **exploratory data analysis (EDA)** and **machine learning modeling** to understand the used car market and predict car selling prices.
+This project combines **exploratory data analysis (EDA),** **data visualization,** and **machine learning modeling** to understand the used car market and predict car selling prices.
 
 ## Objectives
 1. Perform data cleaning and preprocessing  
