@@ -31,7 +31,7 @@ This project combines **exploratory data analysis (EDA)** and **machine learning
   plt.savefig("01_Univariate_Analysis_of_ Numerical_Features.jpg", bbox_inches='tight')
   plt.show()
   ```
-![(Univariate Analysis of Numerical Features)](output/figure/01_Univariate_Analysis_of_ Numerical_Features.jpg)
+![(Univariate Analysis of Numerical Features)](output/figure/01_Univariate_Analysis_of_%20Numerical_Features.jpg)
 - Univariate Analysis of Categorical Feature
   ```python
   cat_columns=['make','body', 'transmission','state', 'color', 'interior']
