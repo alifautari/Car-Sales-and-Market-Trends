@@ -18,7 +18,7 @@ This project combines **exploratory data analysis (EDA)** and **machine learning
 - Tableau (for dashboard visualization)  
 
 ## Exploratory Data Analysis (EDA)
-- Univariate Analysis (Histogram) of Numerical Feature
+- Univariate Analysis of Numerical Feature
   ```python
   num_columns=df.select_dtypes(include=np.number).columns.to_list()
   plt.figure(figsize=(14,10))
@@ -31,8 +31,8 @@ This project combines **exploratory data analysis (EDA)** and **machine learning
   plt.savefig("01_Univariate_Analysis_of_ Numerical_Features.jpg", bbox_inches='tight')
   plt.show()
   ```
-![Univariate Analysis of Numerical Features](output/Univariate%20Analysis%20of%20Numerical%20Features.jpg)
-- Univariate Analysis (Bar) of Categorical Feature
+![Univariate Analysis of Numerical Features](output/figure/01_Univariate_Analysis_of_Numerical_Features.jpg)
+- Univariate Analysis of Categorical Feature
   ```python
   cat_columns=['make','body', 'transmission','state', 'color', 'interior']
   plt.figure(figsize=(20,18))
@@ -46,7 +46,7 @@ This project combines **exploratory data analysis (EDA)** and **machine learning
   plt.savefig("02_Univariate_Analysis_of_Categorical_Features.jpg", bbox_inches='tight')
   plt.show()
   ```
-  ![Univariate Analysis of Categorical Features](output/Univariate%20Analysis%20of%20Categorical%20Features.jpg)
+  ![Univariate Analysis of Categorical Features](output/figure/02_Univariate_Analysis_of_Categorical_Features.jpg)
 - Multivariate Analysis (Correlation of Numerical Features)
   ```python
   plt.figure(figsize=(8,5))
@@ -55,8 +55,8 @@ This project combines **exploratory data analysis (EDA)** and **machine learning
   plt.savefig("03_Multivariate_Analysis_(Correlation_of_Numerical_Features).jpg", bbox_inches='tight')
   plt.show()
   ```
-  ![Multivariate Analysis (Correlation of Numerical Features)](output/Multivariate%20Analysis%20(Correlation%20of%20Numerical%20Features).jpg)
-- Distribution of car prices (boxplot)
+  ![Multivariate Analysis (Correlation of Numerical Features)](output/figure/03_Multivariate_Analysis_(Correlation_of_Numerical_Features).jpg)
+- Distribution of car prices
   ```python
   if 'make' in df.columns:
     plt.figure(figsize=(14,7))
@@ -67,6 +67,7 @@ This project combines **exploratory data analysis (EDA)** and **machine learning
     plt.savefig("04_Brand_vs_Selling_Price_(boxplot).jpg", bbox_inches='tight')
     plt.show()
   ```
+  ![Brand vs Selling Price)](output/figure/04_Brand_vs_Selling_Price_(boxplot).jpg)
 - Relationship between odometer and price
   ```python
   if 'odometer' in df.columns:
@@ -77,6 +78,7 @@ This project combines **exploratory data analysis (EDA)** and **machine learning
     plt.savefig("05_Odometer_vs_Selling_Price_(scatterplot).jpg", bbox_inches='tight')
     plt.show()
   ```
+  ![(Odometer vs Selling Price)](output/figure/05_Odometer_vs_Selling_Price_(scatterplot).jpg)
 - Effect of condition and MMR
   ```python
   if 'condition' in df.columns:
@@ -87,6 +89,7 @@ This project combines **exploratory data analysis (EDA)** and **machine learning
     plt.savefig("06_Condition_vs_MMR.jpg", bbox_inches='tight')
     plt.show()
   ```
+  ![(Condition vs MMR)](output/figure/06_Condition_vs_MMR.jpg)
 
 ## Visualization
 - Trends of Monthly Sales Revenue (Top 10 Brands)
