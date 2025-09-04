@@ -18,7 +18,7 @@ This project combines **exploratory data analysis (EDA)** and **machine learning
 - Tableau (for dashboard visualization)  
 
 ## Exploratory Data Analysis (EDA)
-- Univariate Analysis (Histogram) of Numerical Feature '''python num_columns=df.select_dtypes(include=np.number).columns.to_list()
+- Univariate Analysis (Histogram) of Numerical Feature ```python num_columns=df.select_dtypes(include=np.number).columns.to_list()
 plt.figure(figsize=(14,10))
 plt.suptitle("Univariate Analysis of Numerical Features",fontsize=20,fontweight='bold',alpha=0.8,y=1.)
 for i, col in enumerate (num_columns):
@@ -27,8 +27,8 @@ for i, col in enumerate (num_columns):
     plt.title(f"Distribution of {col}")
 plt.tight_layout(rect=[0, 0, 1, 0.99])
 plt.savefig("01_Univariate_Analysis_of_ Numerical_Features.jpg", bbox_inches='tight')
-plt.show()'''   ![Univariate Analysis of Numerical Features](output/Univariate%20Analysis%20of%20Numerical%20Features.jpg)
-- Univariate Analysis (Bar) of Categorical Feature ![Univariate Analysis of Categorical Features](output/Univariate%20Analysis%20of%20Categorical%20Features.jpg)
+plt.show()``` ![Univariate Analysis of Numerical Features](output/Univariate%20Analysis%20of%20Numerical%20Features.jpg)
+- Univariate Analysis (Bar) of Categorical Feature ![Univariate Analysis of Categorical Features}(output/Univariate%20Analysis%20of%20Categorical%20Features.jpg)
 - Multivariate Analysis (Correlation of Numerical Features) ![Multivariate Analysis (Correlation of Numerical Features)](output/Multivariate%20Analysis%20(Correlation%20of%20Numerical%20Features).jpg)
 - Distribution of car prices (boxplot)  
 - Relationship between odometer and price  
