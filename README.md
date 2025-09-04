@@ -32,7 +32,22 @@ This project combines **exploratory data analysis (EDA)** and **machine learning
   plt.show()
   ```
 ![Univariate Analysis of Numerical Features](output/Univariate%20Analysis%20of%20Numerical%20Features.jpg)
-- Univariate Analysis (Bar) of Categorical Feature ![Univariate Analysis of Categorical Features}(output/Univariate%20Analysis%20of%20Categorical%20Features.jpg)
+- Univariate Analysis (Bar) of Categorical Feature
+  ```
+  python
+  cat_columns=['make','body', 'transmission','state', 'color', 'interior']
+  plt.figure(figsize=(20,18))
+  plt.suptitle("Univariate Analysis of Categorical Features",fontsize=20,fontweight='bold',alpha=0.8,y=1.)
+  for i, col in enumerate (cat_columns):
+    plt.subplot(3,2,i+1)
+    sns.countplot(x=df[col], order=df[col].value_counts().index)
+    plt.xticks(rotation=90)
+    plt.title(f"Distribution of {col}")
+  plt.tight_layout(rect=[0, 0, 1, 0.99])
+  plt.savefig("02_Univariate_Analysis_of_Categorical_Features.jpg", bbox_inches='tight')
+  plt.show()
+  ```
+  ![Univariate Analysis of Categorical Features](output/Univariate%20Analysis%20of%20Categorical%20Features.jpg)
 - Multivariate Analysis (Correlation of Numerical Features) ![Multivariate Analysis (Correlation of Numerical Features)](output/Multivariate%20Analysis%20(Correlation%20of%20Numerical%20Features).jpg)
 - Distribution of car prices (boxplot)  
 - Relationship between odometer and price  
