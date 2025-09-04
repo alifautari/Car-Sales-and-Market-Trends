@@ -31,7 +31,7 @@ This project combines **exploratory data analysis (EDA)** and **machine learning
   plt.savefig("01_Univariate_Analysis_of_ Numerical_Features.jpg", bbox_inches='tight')
   plt.show()
   ```
-![Univariate Analysis of Numerical Features](output/figure/01_Univariate_Analysis_of_Numerical_Features.jpg)
+![Univariate Analysis of Numerical Features](output/figure/01_Univariate_Analysis_of_ Numerical_Features.jpg)
 - Univariate Analysis of Categorical Feature
   ```python
   cat_columns=['make','body', 'transmission','state', 'color', 'interior']
@@ -93,6 +93,48 @@ This project combines **exploratory data analysis (EDA)** and **machine learning
 
 ## Visualization
 - Trends of Monthly Sales Revenue (Top 10 Brands)
+  ```python
+  #Parsing datetime
+  df['date'] = pd.to_datetime(df['saledate'], errors="coerce").dt.tz_convert(None)
+  
+  #Group by saledate (monthly) and brand, then sum selling price
+  group = df.groupby([
+    df['date'].dt.to_period('M').dt.to_timestamp(),  # group by month
+    'make'
+  ])['sellingprice'].sum().reset_index()
+
+  # Top 10 brands by total selling price
+  top_brand = (
+    group.groupby('make')['sellingprice']
+    .sum()
+    .sort_values(ascending=False)
+    .head(10)
+    .index
+  )
+  
+  # Filter grouped data to only include those brands
+  top_group = group[group['make'].isin(top_brand)]
+  
+  # Convert sales to millions
+  top_group.loc[:, 'Sales (Million)'] = top_group['sellingprice'] / 1e6
+  
+  # Plot
+  plt.figure(figsize=(12, 6))
+  sns.lineplot(data=top_group, x='date', y='Sales (Million)', hue='make', marker=(8,0,0))
+  plt.title('Monthly Sales Revenue (Top 10 Brands)', fontsize=20)
+  plt.xlabel('Sale Date')
+  plt.ylabel('Sales (Million, $)')
+  ax = plt.gca()
+  ax.xaxis.set_major_locator(mdates.MonthLocator(interval=1))  # every 1 month
+  ax.xaxis.set_major_formatter(mdates.DateFormatter('%b %Y'))  # format as Jan 2015
+  plt.xticks(rotation=45)
+  plt.legend(title='Brand', bbox_to_anchor=(1.05, 1), loc='upper left')
+  plt.tight_layout(rect=[0, 0, 1, 0.99])
+  plt.grid(True)
+  plt.savefig("07_Monthly_Sales_Revenue_(Top_10_Brands).jpg", bbox_inches='tight')
+  plt.show()
+  ```
+  ![(Monthly Sales Revenue (Top 10 Brands))](output/figure/07_Monthly_Sales_Revenue_(Top_10_Brands).jpg)
 - Top 10 Most Popular Cars (Brand-Model)
 - Top 10 Cars by Total Sales Revenue
 - Treemap of top cars models by total revenue
