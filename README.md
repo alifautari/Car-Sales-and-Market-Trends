@@ -33,8 +33,7 @@ This project combines **exploratory data analysis (EDA)** and **machine learning
   ```
 ![Univariate Analysis of Numerical Features](output/Univariate%20Analysis%20of%20Numerical%20Features.jpg)
 - Univariate Analysis (Bar) of Categorical Feature
-  ```
-  python
+  ```python
   cat_columns=['make','body', 'transmission','state', 'color', 'interior']
   plt.figure(figsize=(20,18))
   plt.suptitle("Univariate Analysis of Categorical Features",fontsize=20,fontweight='bold',alpha=0.8,y=1.)
@@ -48,10 +47,46 @@ This project combines **exploratory data analysis (EDA)** and **machine learning
   plt.show()
   ```
   ![Univariate Analysis of Categorical Features](output/Univariate%20Analysis%20of%20Categorical%20Features.jpg)
-- Multivariate Analysis (Correlation of Numerical Features) ![Multivariate Analysis (Correlation of Numerical Features)](output/Multivariate%20Analysis%20(Correlation%20of%20Numerical%20Features).jpg)
-- Distribution of car prices (boxplot)  
-- Relationship between odometer and price  
+- Multivariate Analysis (Correlation of Numerical Features)
+  ```python
+  plt.figure(figsize=(8,5))
+  sns.heatmap(df.corr(numeric_only=True), annot=True, cmap="crest")
+  plt.title("Multivariate Analysis (Correlation of Numerical Features)")
+  plt.savefig("03_Multivariate_Analysis_(Correlation_of_Numerical_Features).jpg", bbox_inches='tight')
+  plt.show()
+  ```
+  ![Multivariate Analysis (Correlation of Numerical Features)](output/Multivariate%20Analysis%20(Correlation%20of%20Numerical%20Features).jpg)
+- Distribution of car prices (boxplot)
+  ```python
+  if 'make' in df.columns:
+    plt.figure(figsize=(14,7))
+    sns.boxplot(x='make', y='sellingprice', data=df, palette='flare')
+    plt.xticks(rotation=90)
+    plt.title("Brand vs Selling Price")
+    plt.tight_layout(rect=[0, 0, 1, 0.99])
+    plt.savefig("04_Brand_vs_Selling_Price_(boxplot).jpg", bbox_inches='tight')
+    plt.show()
+  ```
+- Relationship between odometer and price
+  ```python
+  if 'odometer' in df.columns:
+    plt.figure(figsize=(8,5))
+    sns.scatterplot(x='odometer', y='sellingprice', data=df, hue='body', palette='magma')
+    plt.title("Odometer vs Selling Price")
+    plt.tight_layout(rect=[0, 0, 1, 0.99])
+    plt.savefig("05_Odometer_vs_Selling_Price_(scatterplot).jpg", bbox_inches='tight')
+    plt.show()
+  ```
 - Effect of condition and MMR
+  ```python
+  if 'condition' in df.columns:
+    plt.figure(figsize=(8,5))
+    sns.lineplot(x='condition', y='mmr', data=df)
+    plt.title("Cars' Conditions vs Manheim Market Report (MMR)")
+    plt.tight_layout(rect=[0, 0, 1, 0.99])
+    plt.savefig("06_Condition_vs_MMR.jpg", bbox_inches='tight')
+    plt.show()
+  ```
 
 ## Visualization
 - Trends of Monthly Sales Revenue (Top 10 Brands)
