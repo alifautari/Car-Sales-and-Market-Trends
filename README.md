@@ -313,4 +313,4 @@ This project combines **exploratory data analysis (EDA),** **data visualization,
 - Key insights: Car prices are mainly influenced by condition and MMR.  
 
 ## Dashboard
-👉 Tableau Dashboard: [View Here]([https://public.tableau.com/...](https://public.tableau.com/views/CarSalesandMarketTrends/Overview?:language=en-US&publish=yes&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link))  
+👉 Tableau Dashboard: [View Here](https://public.tableau.com/views/CarSalesandMarketTrends/Overview?:language=en-US&publish=yes&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link)  
